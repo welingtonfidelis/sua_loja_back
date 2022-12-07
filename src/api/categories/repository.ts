@@ -1,5 +1,5 @@
 import { prisma } from "../../dbCLient";
-import { CreateCategoryData, DeleteCategoryByIdData, FindCategoryByIdData, ListAllData, UpdateCategoryData } from "./types";
+import { CreateCategoryData, DeleteCategoryByIdData, FindCategoryByIdData, ListAllByCompanyNameKeyData, ListAllData, UpdateCategoryData } from "./types";
 
 const categoryRepository = {
   findById(data: FindCategoryByIdData) {
@@ -44,6 +44,32 @@ const categoryRepository = {
     if (filter_by_id) {
       where.AND.push({ id: filter_by_id });
     }
+
+    if (filter_by_name) {
+      where.AND.push({
+        name: { contains: filter_by_name, mode: "insensitive" },
+      });
+    }
+
+    const total = await prisma.category.count({ where });
+
+    const categories = await prisma.category.findMany({
+      where,
+      skip: offset,
+      take: limit,
+      orderBy: {
+        name: "asc",
+      },
+    });
+
+    return { categories, total };
+  },
+
+  async listAllByCompanyNameKey(data: ListAllByCompanyNameKeyData) {
+    const { page, limit, company_name_key, filter_by_name } = data;
+    const offset = (page - 1) * limit;
+
+    const where: any = { AND: [{ company: { name_key: company_name_key }}] };
 
     if (filter_by_name) {
       where.AND.push({

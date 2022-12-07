@@ -4,11 +4,12 @@ import { categoryRepository } from "./repository";
 import {
   CreateCategoryPayload,
   DeleteCategoryByIdPayload,
+  ListAllByCompanyNameKeyPayload,
   ListAllPayload,
   UpdateCategoryPayload,
 } from "./types";
 
-const { findById, updateById, deleteById, create, listAll } = categoryRepository;
+const { findById, updateById, deleteById, create, listAll, listAllByCompanyNameKey } = categoryRepository;
 
 const categoryService = {
   getCategoryByIdService(payload: FindUserByIdPayload) {
@@ -25,6 +26,10 @@ const categoryService = {
 
   listCategoriesService(payload: ListAllPayload) {
     return listAll(payload);
+  },
+
+  listCategoriesByCompanyNameKeyService(payload: ListAllByCompanyNameKeyPayload) {
+    return listAllByCompanyNameKey(payload);
   },
 
   deleteCategoryService(payload: DeleteCategoryByIdPayload) {

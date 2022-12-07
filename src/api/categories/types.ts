@@ -32,6 +32,13 @@ export type ListAllPayload = {
   filter_by_company_id?: number;
 };
 
+export type ListAllByCompanyNameKeyPayload = {
+  page: number;
+  limit: number;
+  company_name_key: string;
+  filter_by_name?: string;
+};
+
 export type DeleteCategoryByIdPayload = {
   id: number;
   filter_by_company_id?: number;
@@ -60,6 +67,13 @@ export type ListAllData = {
   filter_by_id?: number;
   filter_by_name?: string;
   filter_by_company_id?: number;
+};
+
+export type ListAllByCompanyNameKeyData = {
+  page: number;
+  limit: number;
+  company_name_key: string;
+  filter_by_name?: string;
 };
 
 export type DeleteCategoryByIdData = {

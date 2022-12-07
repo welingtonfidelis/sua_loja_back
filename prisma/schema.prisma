@@ -14,6 +14,7 @@ enum Role {
   USER
   ADMIN
   MANAGER
+  CLIENT
 }
 
 model Company {
@@ -68,6 +69,8 @@ model Product {
   images      String[]
   price       Float
   quantity    Int
+  variation_1 String[]
+  variation_2 String[]
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 

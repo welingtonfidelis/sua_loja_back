@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { categoryRouter } from "./api/categories/route";
+import { clientRouter } from "./api/clients/route";
 import { companyRouter } from "./api/companies/route";
 
 import { healthRouter } from "./api/health/route";
@@ -13,6 +14,7 @@ const router = Router();
 // NO AUTHENTICATED ROUTES
 router.use(healthRouter);
 router.use(userNoAuthRouter);
+router.use(clientRouter);
 
 // AUTHENTICATED ROUTES
 router.use(authValidate);
