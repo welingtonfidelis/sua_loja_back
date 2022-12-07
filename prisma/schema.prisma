@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+  MANAGER
+}
+
+model Company {
+  id         Int      @id @default(autoincrement())
+  name       String
+  name_key   String   @unique
+  email      String   @unique
+  phone      String
+  image_url  String
+  image_key  String
+  is_blocked Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  users      User[]
+  categories Category[]
+  products   Product[]
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String   @unique
+  username    String   @unique
+  password    String
+  image_url   String
+  image_key   String
+  is_blocked  Boolean  @default(false)
+  permissions Role[]
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  company_id Int
+  company    Company @relation(fields: [company_id], references: [id])
+}
+
+model Category {
+  id         Int      @id @default(autoincrement())
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  company_id Int
+  company    Company   @relation(fields: [company_id], references: [id])
+  products   Product[]
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  images      String[]
+  price       Float
+  quantity    Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  company_id  Int
+  company     Company  @relation(fields: [company_id], references: [id])
+  category_id Int
+  category    Category @relation(fields: [category_id], references: [id])
+}
