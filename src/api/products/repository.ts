@@ -93,7 +93,7 @@ const productRepository = {
     } = data;
     const offset = (page - 1) * limit;
 
-    const where: any = { AND: [{ is_active: true }, { company: { name_key: company_name_key } }] };
+    const where: any = { AND: [{ is_active: true }, { company: { name_key: company_name_key, is_blocked: false } }] };
 
     if (filter_by_category_id) {
       where.AND.push({ category_id: filter_by_category_id });

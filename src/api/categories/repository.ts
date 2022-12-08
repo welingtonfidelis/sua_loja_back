@@ -69,7 +69,7 @@ const categoryRepository = {
     const { page, limit, company_name_key, filter_by_name } = data;
     const offset = (page - 1) * limit;
 
-    const where: any = { AND: [{ company: { name_key: company_name_key }}] };
+    const where: any = { AND: [{ company: { name_key: company_name_key, is_blocked: false }}] };
 
     if (filter_by_name) {
       where.AND.push({
