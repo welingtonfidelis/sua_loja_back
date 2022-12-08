@@ -1,5 +1,3 @@
-import { FindUserByIdPayload } from "../users/types";
-
 import { categoryRepository } from "./repository";
 import {
   CreateCategoryPayload,
@@ -7,12 +5,13 @@ import {
   ListAllByCompanyNameKeyPayload,
   ListAllPayload,
   UpdateCategoryPayload,
+  FindCategoryByIdPayload
 } from "./types";
 
 const { findById, updateById, deleteById, create, listAll, listAllByCompanyNameKey } = categoryRepository;
 
 const categoryService = {
-  getCategoryByIdService(payload: FindUserByIdPayload) {
+  getCategoryByIdService(payload: FindCategoryByIdPayload) {
     return findById(payload);
   },
 

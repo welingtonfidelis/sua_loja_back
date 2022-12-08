@@ -17,6 +17,7 @@ import {
 } from "./midleware/requestPayloadValidateSchema";
 import { permissionValidate } from "../../shared/middleware/permissionValidate";
 import { Role } from "@prisma/client";
+import { createAssembler, updateAssembler } from "./midleware/requestDataAssembler";
 
 const { ADMIN, MANAGER } = Role;
 
@@ -55,7 +56,7 @@ userNoAuthRouter.post(
 userRouter.get("/users/profile", getProfile);
 userRouter.patch(
   "/users/profile",
-  [multer().single("file"), payloadValidate(updateProfileSchema)],
+  [multer().single("file"), payloadValidate(updateProfileSchema), updateAssembler],
   updateProfile
 );
 userRouter.patch(
@@ -69,8 +70,8 @@ userRouter.use(permissionValidate([ADMIN, MANAGER]));
 
 userRouter.get("/users", payloadValidate(listSchema), list);
 userRouter.get("/users/:id", payloadValidate(getByIdSchema), getById);
-userRouter.patch("/users/:id", payloadValidate(updateSchema), update);
-userRouter.post("/users", payloadValidate(createSchema), create);
+userRouter.patch("/users/:id", [payloadValidate(updateSchema), updateAssembler], update);
+userRouter.post("/users", [payloadValidate(createSchema), createAssembler], create);
 userRouter.delete("/users/:id", payloadValidate(deleteSchema), deleteById);
 
 export { userNoAuthRouter, userRouter };

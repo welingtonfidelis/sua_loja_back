@@ -62,7 +62,6 @@ const companyController = {
     const payload = {
       ...body,
       file,
-      is_blocked: parseToBoolean(body.is_blocked),
     } as CreateCompanyPayload;
 
     const newCompany = await createCompanyService(payload);
@@ -134,9 +133,9 @@ const companyController = {
     const { company_id: loggedUserCompanyId } = req.authenticated_user;
     const body = req.body as UpdateCompanyBody;
     const { file } = req;
-    const { is_blocked, name, email, delete_image } = body;
+    const { is_blocked, name, email } = body;
 
-    if (parseToBoolean(is_blocked) && id === loggedUserCompanyId) {
+    if (is_blocked && id === loggedUserCompanyId) {
       return res
         .status(CAN_NOT_BLOCK_YOURSELF_COMPANY.code)
         .json({ message: CAN_NOT_BLOCK_YOURSELF_COMPANY.message });
@@ -163,14 +162,6 @@ const companyController = {
     }
 
     const payload = { ...body, id } as UpdateCompanyPayload;
-
-    if (!isUndefined(is_blocked)) {
-      payload.is_blocked = parseToBoolean(is_blocked);
-    }
-
-    if (!isUndefined(delete_image)) {
-      payload.delete_image = parseToBoolean(delete_image);
-    }
 
     const { count } = await updateCompanyService({ ...payload, file });
     if (!count) {
@@ -248,14 +239,6 @@ const companyController = {
     }
 
     const payload = { ...body, file, id } as UpdateUserPayload;
-
-    if (!isUndefined(is_blocked)) {
-      payload.is_blocked = parseToBoolean(is_blocked);
-    }
-
-    if (!isUndefined(delete_image)) {
-      payload.delete_image = parseToBoolean(delete_image);
-    }
 
     const { count } = await updateUserService(payload);
     if (!count) {

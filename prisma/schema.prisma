@@ -69,6 +69,7 @@ model Product {
   images      String[]
   price       Float
   quantity    Int
+  is_active   Boolean  @default(true)
   variation_1 String[]
   variation_2 String[]
   created_at  DateTime @default(now())

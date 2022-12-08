@@ -45,7 +45,7 @@ const companyService = {
     if (file) {
       const { Location, Key } = await uploadImage(
         file,
-        "company/logo",
+        `company/${id}/logo`,
         `company_${id}`
       );
 

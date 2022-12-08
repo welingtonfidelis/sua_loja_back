@@ -218,10 +218,6 @@ const userController = {
 
     const payload = { ...body, file, id } as UpdateUserPayload;
 
-    if (!isUndefined(body.delete_image)) {
-      payload.delete_image = parseToBoolean(body.delete_image);
-    }
-
     await updateUserService(payload);
 
     return res.status(204).json({});
@@ -357,7 +353,7 @@ const userController = {
   async update(req: Request, res: Response) {
     const id = parseInt(req.params.id);
     const body = req.body as UpdateUserBody;
-    const { permissions, username, email, is_blocked, delete_image } = body;
+    const { permissions, username, email } = body;
     const { permissions: loggedUserPermissions, company_id } =
       req.authenticated_user;
     const { file } = req;
@@ -392,14 +388,6 @@ const userController = {
       id,
       filter_by_company_id: company_id,
     } as UpdateUserPayload;
-
-    if (!isUndefined(is_blocked)) {
-      payload.is_blocked = parseToBoolean(is_blocked)
-    }
-
-    if (!isUndefined(delete_image)) {
-      payload.delete_image = parseToBoolean(delete_image);
-    }
 
     const { count } = await updateUserService(payload);
     if (!count) {

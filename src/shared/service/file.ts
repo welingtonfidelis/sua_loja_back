@@ -37,6 +37,20 @@ const uploadImage = (file: any, folderName = "", fileName = "") => {
   return s3.upload(params).promise();
 };
 
+const uploadMultipleImages = (
+  files: any[],
+  folderName = "",
+  baseFileName = ""
+) => {
+  const promises = [];
+  for (let i = 0; i < files.length; i += 1) {
+    const baseName = baseFileName + randomUUID();
+    promises.push(uploadImage(files[i], folderName, baseName));
+  }
+
+  return Promise.all(promises);
+};
+
 const deleteFile = (fileUrl: string) => {
   const params = {
     Bucket: BUCKET_NAME,
@@ -46,4 +60,4 @@ const deleteFile = (fileUrl: string) => {
   return s3.deleteObject(params).promise();
 };
 
-export { uploadImage, deleteFile };
+export { uploadImage, uploadMultipleImages, deleteFile };

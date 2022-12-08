@@ -13,6 +13,7 @@ import {
 } from "./midleware/requestPayloadValidateSchema";
 import { permissionValidate } from "../../shared/middleware/permissionValidate";
 import { Role } from "@prisma/client";
+import { createAssembler, updateAssembler, updateUserAssembler } from "./midleware/requestDataAssembler";
 
 const { ADMIN } = Role;
 
@@ -34,7 +35,7 @@ companyRouter.get(
 );
 companyRouter.patch(
   "/companies/users/:id",
-  payloadValidate(updateUserSchema),
+  [payloadValidate(updateUserSchema), updateUserAssembler],
   updateUser
 );
 
@@ -43,12 +44,12 @@ companyRouter.get("/companies", payloadValidate(listSchema), list);
 companyRouter.get("/companies/:id", payloadValidate(getByIdSchema), getById);
 companyRouter.patch(
   "/companies/:id",
-  [multer().single("file"), payloadValidate(updateSchema)],
+  [multer().single("file"), payloadValidate(updateSchema), updateAssembler],
   update
 );
 companyRouter.post(
   "/companies",
-  [multer().single("file"), payloadValidate(createSchema)],
+  [multer().single("file"), payloadValidate(createSchema), createAssembler],
   create
 );
 

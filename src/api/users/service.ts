@@ -59,7 +59,7 @@ const userService = {
     if (file) {
       const { Location, Key } = await uploadImage(
         file,
-        "profile",
+        `user/${id}/profile`,
         `user_${id}`
       );
 

@@ -23,7 +23,7 @@ export const HttpMessageEnum = {
   INVALID_USERNAME_OR_EMAIL: {
     name: "INVALID_USERNAME_OR_EMAIL",
     message: "Invalid username or email",
-    code: 404,
+    code: 400,
     use: "/users;",
   },
   INVALID_PASSWORD: {
@@ -85,7 +85,7 @@ export const HttpMessageEnum = {
   INVALID_COMPANY_ID: {
     name: "INVALID_COMPANY_ID",
     message: "Invalid company id",
-    code: 404,
+    code: 400,
     use: "/companies;",
   },
   CAN_NOT_BLOCK_YOURSELF_COMPANY: {
@@ -117,7 +117,7 @@ export const HttpMessageEnum = {
   INVALID_CATEGORY_ID: {
     name: "INVALID_CATEGORY_ID",
     message: "Invalid category id",
-    code: 404,
+    code: 400,
     use: "/categories;",
   },
   CATEGORY_NOT_FOUND: {
@@ -125,5 +125,19 @@ export const HttpMessageEnum = {
     message: "Category not found",
     code: 404,
     use: "/categories;",
+  },
+
+  // PRODUCTS
+  INVALID_PRODUCT_ID: {
+    name: "INVALID_PRODUCT_ID",
+    message: "Invalid product id",
+    code: 400,
+    use: "/products;",
+  },
+  PRODUCT_NOT_FOUND: {
+    name: "PRODUCT_NOT_FOUND",
+    message: "product not found",
+    code: 404,
+    use: "/products;",
   },
 };

@@ -6,6 +6,7 @@ import { companyRouter } from "./api/companies/route";
 import { healthRouter } from "./api/health/route";
 import { httpMessageRouter } from "./api/httpMessages/route";
 import { permissionRouter } from "./api/permissions/route";
+import { productRouter } from "./api/products/route";
 import { userNoAuthRouter, userRouter } from "./api/users/route";
 import { authValidate } from "./shared/middleware/authValidate";
 
@@ -18,11 +19,20 @@ router.use(clientRouter);
 
 // AUTHENTICATED ROUTES
 router.use(authValidate);
-router.use(httpMessageRouter); // no role requested
-router.use(categoryRouter); //USER role requested below
-router.use(userRouter); // ADMIN/MANAGER role requested below
+
+// no role requested
+router.use(httpMessageRouter);
+
+//USER role requested
+router.use(categoryRouter);
+router.use(productRouter);
+
+// ADMIN/MANAGER role requested
+router.use(userRouter);
 router.use(permissionRouter);
-router.use(companyRouter); // only ADMIN role can access below
+
+// only ADMIN role can access
+router.use(companyRouter);
 
 // ERROR HANDLER
 router.use((error: any, req: Request, res: Response, next: NextFunction) => {
