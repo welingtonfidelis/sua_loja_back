@@ -1,11 +1,16 @@
 import { Request, Response } from "express";
+import { HttpMessageEnum } from "../../shared/enum/httpMessage";
 import { parseToInt } from "../../shared/utils";
 
 import { categoryService } from "../categories/service";
+import { companyService } from "../companies/service";
 import { productService } from "../products/service";
 
 const { listCategoriesByCompanyNameKeyService } = categoryService;
 const { listProductsByCompanyNameKeyService } = productService;
+const { getCompanyByNameKeyService } = companyService;
+
+const { COMPANY_NOT_FOUND, BLOCKED_COMPANY } = HttpMessageEnum;
 
 const clientController = {
   async listCategories(req: Request, res: Response) {
@@ -18,7 +23,7 @@ const clientController = {
       page,
       limit,
       filter_by_name,
-      company_name_key
+      company_name_key,
     });
     const response = {
       ...categories,
@@ -36,14 +41,16 @@ const clientController = {
     const limit = parseToInt(req.query.limit) as number;
     const company_name_key = req.query.company_name_key as string;
     const filter_by_name = req.query.filter_by_name as string;
-    const filter_by_category_id = parseToInt(req.query.filter_by_category_id) as number;
+    const filter_by_category_id = parseToInt(
+      req.query.filter_by_category_id
+    ) as number;
 
     const products = await listProductsByCompanyNameKeyService({
       page,
       limit,
       filter_by_name,
       company_name_key,
-      filter_by_category_id
+      filter_by_category_id,
     });
     const response = {
       ...products,
@@ -54,6 +61,29 @@ const clientController = {
     };
 
     return res.json(response);
+  },
+
+  async getCompanyProfile(req: Request, res: Response) {
+    const company_name_key = req.query.company_name_key as string;
+
+    const company = await getCompanyByNameKeyService(company_name_key);
+
+    if (!company) {
+      return res
+        .status(COMPANY_NOT_FOUND.code)
+        .json({ message: COMPANY_NOT_FOUND.message });
+    }
+
+    const { is_blocked, created_at, image_key, name_key, updated_at, ...rest } =
+      company;
+
+    if (is_blocked) {
+      return res
+        .status(BLOCKED_COMPANY.code)
+        .json({ message: BLOCKED_COMPANY.message });
+    }
+
+    return res.json(rest);
   },
 };
 
