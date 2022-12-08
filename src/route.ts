@@ -36,8 +36,14 @@ router.use(companyRouter);
 
 // ERROR HANDLER
 router.use((error: any, req: Request, res: Response, next: NextFunction) => {
-  const statusCode = error?.code || 500;
-  const errorMessage = error?.message || "Internal server error";
+  let statusCode = error?.code || 500;
+  let errorMessage = error?.message || "Internal server error";
+
+  // ESPECIAL ERRORS
+  if (error?.code === 'LIMIT_UNEXPECTED_FILE') {
+    statusCode = 400;
+    errorMessage = "Limit file upload reached"
+  }
 
   res.status(statusCode).json({ message: errorMessage });
 });

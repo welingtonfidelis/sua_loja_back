@@ -2,16 +2,21 @@ import { Router } from "express";
 
 import { clientController } from "./controller";
 import { payloadValidate } from "../../shared/middleware/payloadValidate";
-import { listCategoriesSchema } from "./midleware/requestPayloadValidateSchema";
+import { listCategoriesSchema, listProductsSchema } from "./midleware/requestPayloadValidateSchema";
 
 const clientRouter = Router();
-const { listCategories } = clientController;
+const { listCategories, listProducts } = clientController;
 
 // NOT AUTHENTICATED ROUTES
 clientRouter.get(
   "/clients/products/categories",
   payloadValidate(listCategoriesSchema),
   listCategories
+);
+clientRouter.get(
+  "/clients/products",
+  payloadValidate(listProductsSchema),
+  listProducts
 );
 
 // AUTHENTICATED ROUTES
