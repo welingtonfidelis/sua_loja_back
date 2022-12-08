@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { parseToInt } from "../../shared/utils";
 
 import { categoryService } from "../categories/service";
 
@@ -6,12 +7,10 @@ const { listCategoriesByCompanyNameKeyService } = categoryService;
 
 const clientController = {
   async listCategories(req: Request, res: Response) {
-    const page = parseInt(req.query.page as string);
-    const limit = parseInt(req.query.limit as string);
+    const page = parseToInt(req.query.page) as number;
+    const limit = parseToInt(req.query.limit) as number;
     const company_name_key = req.query.company_name_key as string;
-    const filter_by_name = req.query.filter_by_name
-      ? (req.query.filter_by_name as string)
-      : undefined;
+    const filter_by_name = req.query.filter_by_name as string;
 
     const categories = await listCategoriesByCompanyNameKeyService({
       page,

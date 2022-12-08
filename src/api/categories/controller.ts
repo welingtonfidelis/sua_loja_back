@@ -4,6 +4,7 @@ import { categoryService } from "./service";
 
 import { HttpMessageEnum } from "../../shared/enum/httpMessage";
 import { CreateCategoryPayload, UpdateCategoryPayload } from "./types";
+import { parseToInt } from "../../shared/utils";
 
 const {
   createCategoryService,
@@ -32,14 +33,10 @@ const companyController = {
 
   async list(req: Request, res: Response) {
     const { company_id } = req.authenticated_user;
-    const page = parseInt(req.query.page as string);
-    const limit = parseInt(req.query.limit as string);
-    const filter_by_id = req.query.filter_by_id
-      ? parseInt(req.query.filter_by_id as string)
-      : undefined;
-    const filter_by_name = req.query.filter_by_name
-      ? (req.query.filter_by_name as string)
-      : undefined;
+    const page = parseToInt(req.query.page) as number;
+    const limit = parseToInt(req.query.limit) as number;
+    const filter_by_id = parseToInt(req.query.filter_by_id)
+    const filter_by_name = req.query.filter_by_name as string;
 
     const categories = await listCategoriesService({
       page,
