@@ -10,6 +10,7 @@ const updateSchema = Joi.object({
   variation_1: Joi.array().items(Joi.string()),
   variation_2: Joi.array().items(Joi.string()),
   category_id: Joi.number().integer().positive(),
+  delete_images: Joi.array().items(Joi.string()),
 });
 
 export { updateSchema };

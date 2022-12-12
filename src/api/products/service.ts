@@ -1,4 +1,8 @@
-import { uploadMultipleImages } from "../../shared/service/file";
+import {
+  deleteFile,
+  deleteMultipleFiles,
+  uploadMultipleImages,
+} from "../../shared/service/file";
 import { productRepository } from "./repository";
 import {
   CreateProductPayload,
@@ -24,8 +28,18 @@ const productService = {
   },
 
   async updateProductService(payload: UpdateProductPayload) {
-    const { id, company_id, images, ...data } = payload;
+    const { id, company_id, images, delete_images, ...data } = payload;
     let uploadedImages: string[] = [];
+
+    if (delete_images) {
+      const imageKey = delete_images.map((item) => {
+        const splittedUrl = item.split(`/${company_id}/`)[1];
+
+        return `images/company/${company_id}/${splittedUrl}`;
+      });
+
+      await deleteMultipleFiles(imageKey);
+    }
 
     if (images) {
       const resp = await uploadMultipleImages(

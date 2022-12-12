@@ -18,6 +18,7 @@ export type UpdateProductBody = {
   is_active?: boolean;
   variation_1?: string[];
   variation_2?: string[];
+  delete_images?: string[];
   category_id?: number;
 };
 
@@ -48,6 +49,7 @@ export type UpdateProductPayload = {
   category_id?: number;
   filter_by_company_id?: number;
   images?: Express.Multer.File[];
+  delete_images?: string[];
 };
 
 export type FindProductByIdPayload = {

@@ -60,4 +60,15 @@ const deleteFile = (fileUrl: string) => {
   return s3.deleteObject(params).promise();
 };
 
-export { uploadImage, uploadMultipleImages, deleteFile };
+const deleteMultipleFiles = (
+  files: string[],
+) => {
+  const promises = [];
+  for (let i = 0; i < files.length; i += 1) {
+    promises.push(deleteFile(files[i]));
+  }
+
+  return Promise.all(promises);
+};
+
+export { uploadImage, uploadMultipleImages, deleteFile, deleteMultipleFiles };

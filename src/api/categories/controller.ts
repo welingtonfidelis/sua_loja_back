@@ -27,8 +27,8 @@ const companyController = {
 
     const newCategory = await createCategoryService(payload);
 
-    const { id, name } = newCategory;
-    return res.json({ id, name });
+    const { id } = newCategory;
+    return res.json({ id });
   },
 
   async list(req: Request, res: Response) {
