@@ -1,9 +1,9 @@
 import {
-  deleteFile,
   deleteMultipleFiles,
   uploadMultipleImages,
 } from "../../shared/service/file";
 import { productRepository } from "./repository";
+import { HttpMessageEnum } from "../../shared/enum/httpMessage";
 import {
   CreateProductPayload,
   DeleteProductByIdPayload,
@@ -12,6 +12,7 @@ import {
   UpdateProductPayload,
   FindProductByIdPayload,
 } from "./types";
+import { AppError } from "../../errors/AppError";
 
 const {
   findById,
@@ -22,6 +23,8 @@ const {
   listAllByCompanyNameKey,
 } = productRepository;
 
+const { INVALID_PRODUCT_ID } = HttpMessageEnum;
+
 const productService = {
   getProductByIdService(payload: FindProductByIdPayload) {
     return findById(payload);
@@ -30,9 +33,20 @@ const productService = {
   async updateProductService(payload: UpdateProductPayload) {
     const { id, company_id, images, delete_images, ...data } = payload;
     let uploadedImages: string[] = [];
+    let oldImagesImages: string[] = [];
+
+    const selectedProduct = await productService.getProductByIdService({ id });
+
+    if (!selectedProduct) {
+      throw new AppError(INVALID_PRODUCT_ID.message, INVALID_PRODUCT_ID.code);
+    }
+
+    oldImagesImages = selectedProduct.images || [];
 
     if (delete_images) {
       const imageKey = delete_images.map((item) => {
+        oldImagesImages = oldImagesImages.filter((image) => image !== item);
+
         const splittedUrl = item.split(`/${company_id}/`)[1];
 
         return `images/company/${company_id}/${splittedUrl}`;
@@ -51,7 +65,11 @@ const productService = {
       uploadedImages = resp.map((item) => item.Location);
     }
 
-    return updateById({ ...data, id, images: uploadedImages });
+    return updateById({
+      ...data,
+      id,
+      images: [...oldImagesImages, ...uploadedImages],
+    });
   },
 
   async createProductService(payload: CreateProductPayload) {

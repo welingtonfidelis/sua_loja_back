@@ -112,7 +112,7 @@ const productRepository = {
       skip: offset,
       take: limit,
       orderBy: {
-        name: "asc",
+        updated_at: "desc",
       },
     });
 

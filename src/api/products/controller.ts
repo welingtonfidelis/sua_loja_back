@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { productService } from "./service";
 
 import { HttpMessageEnum } from "../../shared/enum/httpMessage";
-import { CreateProductPayload, UpdateProductPayload } from "./types";
+import { CreateProductPayload, UpdateProductBody, UpdateProductPayload } from "./types";
 import { parseToInt } from "../../shared/utils";
 
 const {
@@ -83,7 +83,7 @@ const productController = {
   async update(req: Request, res: Response) {
     const id = parseInt(req.params.id);
     const { company_id } = req.authenticated_user;
-    const body = req.body;
+    const body = req.body as UpdateProductBody;
     const { files } = req
 
     const payload = {
