@@ -6,8 +6,10 @@ const createSchema = Joi.object({
   price: Joi.number().positive().required(),
   quantity: Joi.number().positive().required(),
   is_active: Joi.boolean().required(),
-  variation_1: Joi.array().items(Joi.string()),
-  variation_2: Joi.array().items(Joi.string()),
+  variation: Joi.array().items(Joi.object().keys({
+    name: Joi.string().min(1),
+    value: Joi.array().items(Joi.string()).min(1)
+  })),
   category_id: Joi.number().integer().positive().required(),
 });
 

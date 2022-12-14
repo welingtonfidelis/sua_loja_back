@@ -17,7 +17,7 @@ const productRepository = {
       where.AND.push({ company_id: filter_by_company_id });
     }
 
-    return prisma.product.findFirst({ where });
+    return prisma.product.findFirst({ where, include: { variation: true } });
   },
 
   updateById(data: UpdateProductData) {
@@ -75,6 +75,7 @@ const productRepository = {
       where,
       skip: offset,
       take: limit,
+      include: { variation: true },
       orderBy: {
         name: "asc",
       },
@@ -111,6 +112,7 @@ const productRepository = {
       where,
       skip: offset,
       take: limit,
+      include: { variation: true },
       orderBy: {
         updated_at: "desc",
       },

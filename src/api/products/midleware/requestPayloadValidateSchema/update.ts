@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi, { number } from "joi";
 
 const updateSchema = Joi.object({
   id: Joi.number().integer().positive().required(),
@@ -11,6 +11,16 @@ const updateSchema = Joi.object({
   variation_2: Joi.array().items(Joi.string()),
   category_id: Joi.number().integer().positive(),
   delete_images: Joi.array().items(Joi.string()),
+  add_variation: Joi.array().items(Joi.object().keys({
+    name: Joi.string().min(1),
+    value: Joi.array().items(Joi.string()).min(1)
+  })),
+  update_variation: Joi.array().items(Joi.object().keys({
+    id: Joi.number().integer().positive(),
+    name: Joi.string().min(1),
+    value: Joi.array().items(Joi.string()).min(1)
+  })),
+  delete_variation: Joi.array().items(Joi.number().integer().positive()),
 });
 
 export { updateSchema };

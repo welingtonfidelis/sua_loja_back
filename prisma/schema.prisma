@@ -62,6 +62,15 @@ model Category {
   products   Product[]
 }
 
+model ProductVariation {
+  id    Int      @id @default(autoincrement())
+  name  String
+  value String[]
+
+  product_id Int
+  product    Product @relation(fields: [product_id], references: [id])
+}
+
 model Product {
   id          Int      @id @default(autoincrement())
   name        String
@@ -70,13 +79,12 @@ model Product {
   price       Float
   quantity    Int
   is_active   Boolean  @default(true)
-  variation_1 String[]
-  variation_2 String[]
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 
   company_id  Int
-  company     Company  @relation(fields: [company_id], references: [id])
+  company     Company            @relation(fields: [company_id], references: [id])
   category_id Int
-  category    Category @relation(fields: [category_id], references: [id])
+  category    Category           @relation(fields: [category_id], references: [id])
+  variation   ProductVariation[]
 }

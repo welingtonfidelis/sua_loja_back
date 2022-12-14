@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { productService } from "./service";
 
 import { HttpMessageEnum } from "../../shared/enum/httpMessage";
-import { CreateProductPayload, UpdateProductBody, UpdateProductPayload } from "./types";
+import { CreateProductBody, CreateProductPayload, UpdateProductBody, UpdateProductPayload } from "./types";
 import { parseToInt } from "../../shared/utils";
 
 const {
@@ -18,7 +18,7 @@ const { PRODUCT_NOT_FOUND, NOT_UPDATED_NOT_FOUND } = HttpMessageEnum;
 const productController = {
   async create(req: Request, res: Response) {
     const { company_id } = req.authenticated_user;
-    const body = req.body;
+    const body = req.body as CreateProductBody;
     const { files } = req;
 
     const payload = {

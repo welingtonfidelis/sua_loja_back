@@ -1,3 +1,17 @@
+import { ProductVariation } from "@prisma/client";
+
+type VariationCreate = {
+  name: string,
+  value: string[],
+}
+
+type VariationUpdate = {
+  id: number;
+  name: string,
+  value: string[],
+}
+
+
 // CONTROLLER
 export type CreateProductBody = {
   name: string;
@@ -5,8 +19,7 @@ export type CreateProductBody = {
   price: number;
   quantity: number;
   is_active: boolean;
-  variation_1: string[];
-  variation_2: string[];
+  variation?: VariationCreate[];
   category_id: number;
 };
 
@@ -16,9 +29,10 @@ export type UpdateProductBody = {
   price?: number;
   quantity?: number;
   is_active?: boolean;
-  variation_1?: string[];
-  variation_2?: string[];
   delete_images?: string[];
+  add_variation?: VariationCreate[];
+  update_variation?: VariationUpdate[];
+  delete_variation?: number[];
   category_id?: number;
 };
 
@@ -29,8 +43,7 @@ export type CreateProductPayload = {
   price: number;
   quantity: number;
   is_active: boolean;
-  variation_1: string[];
-  variation_2: string[];
+  variation?: VariationCreate[];
   category_id: number;
   company_id: number;
   images?: Express.Multer.File[];
@@ -44,12 +57,13 @@ export type UpdateProductPayload = {
   price?: number;
   quantity?: number;
   is_active?: boolean;
-  variation_1?: string[];
-  variation_2?: string[];
   category_id?: number;
   filter_by_company_id?: number;
   images?: Express.Multer.File[];
   delete_images?: string[];
+  add_variation?: VariationCreate[];
+  update_variation?: VariationUpdate[];
+  delete_variation?: number[];
 };
 
 export type FindProductByIdPayload = {
@@ -87,8 +101,6 @@ export type CreateProductData = {
   price: number;
   quantity: number;
   is_active: boolean;
-  variation_1: string[];
-  variation_2: string[];
   company_id: number;
   category_id: number;
 };
@@ -101,8 +113,6 @@ export type UpdateProductData = {
   price?: number;
   quantity?: number;
   is_active?: boolean;
-  variation_1?: string[];
-  variation_2?: string[];
   category_id?: number;
   filter_by_company_id?: number;
 };
