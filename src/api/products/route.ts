@@ -26,12 +26,12 @@ productRouter.get("/products", payloadValidate(listSchema), list);
 productRouter.get("/products/:id", payloadValidate(getByIdSchema), getById);
 productRouter.patch(
   "/products/:id",
-  [multer().array("files", 9), payloadValidate(updateSchema), updateAssembler],
+  [multer().array("images", 9), payloadValidate(updateSchema), updateAssembler],
   update
 );
 productRouter.post(
   "/products",
-  [multer().array("files", 9), payloadValidate(createSchema), createAssembler],
+  [multer().array("images", 9), payloadValidate(createSchema), createAssembler],
   create
 );
 

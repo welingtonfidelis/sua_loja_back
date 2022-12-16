@@ -1,22 +1,38 @@
 export const HttpMessageEnum = {
   // GENERIC
-  NO_AUTH: {
-    name: "NO_AUTH",
-    message: "Not authenticated",
-    code: 401,
-    use: "/general-validation;",
+  INTERNAL_SERVER_ERROR: {
+    name: "INTERNAL_SERVER_ERROR",
+    message: "Internal server error",
+    code: 500,
+    use: "/general;",
   },
   NOT_UPDATED_NOT_FOUND: {
     name: "NOT_UPDATED_NOT_FOUND",
     message: "Cannot update because the item was not found",
     code: 400,
-    use: "/general-validation;",
+    use: "/general;",
   },
   NOT_DELETE_NOT_FOUND: {
     name: "NOT_DELETE_NOT_FOUND",
     message: "Cannot delete because the item was not found",
     code: 400,
-    use: "/general-validation;",
+    use: "/general;",
+  },
+
+  // AUTH
+  NO_AUTH: {
+    name: "NO_AUTH",
+    message: "Not authenticated",
+    code: 401,
+    use: "/auth;",
+  },
+
+  // FILE UPLOAD
+  LIMIT_FILE_UPLOAD: {
+    name: "LIMIT_FILE_UPLOAD",
+    message: "Limit file upload reached",
+    code: 400,
+    use: "/file-upload;",
   },
 
   // USERS

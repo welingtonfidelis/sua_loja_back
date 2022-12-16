@@ -44,12 +44,12 @@ companyRouter.get("/companies", payloadValidate(listSchema), list);
 companyRouter.get("/companies/:id", payloadValidate(getByIdSchema), getById);
 companyRouter.patch(
   "/companies/:id",
-  [multer().single("file"), payloadValidate(updateSchema), updateAssembler],
+  [multer().single("image"), payloadValidate(updateSchema), updateAssembler],
   update
 );
 companyRouter.post(
   "/companies",
-  [multer().single("file"), payloadValidate(createSchema), createAssembler],
+  [multer().single("image"), payloadValidate(createSchema), createAssembler],
   create
 );
 

@@ -56,7 +56,7 @@ userNoAuthRouter.post(
 userRouter.get("/users/profile", getProfile);
 userRouter.patch(
   "/users/profile",
-  [multer().single("file"), payloadValidate(updateProfileSchema), updateAssembler],
+  [multer().single("image"), payloadValidate(updateProfileSchema), updateAssembler],
   updateProfile
 );
 userRouter.patch(

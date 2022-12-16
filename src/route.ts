@@ -8,7 +8,10 @@ import { httpMessageRouter } from "./api/httpMessages/route";
 import { permissionRouter } from "./api/permissions/route";
 import { productRouter } from "./api/products/route";
 import { userNoAuthRouter, userRouter } from "./api/users/route";
+import { HttpMessageEnum } from "./shared/enum/httpMessage";
 import { authValidate } from "./shared/middleware/authValidate";
+
+const { INTERNAL_SERVER_ERROR, LIMIT_FILE_UPLOAD } = HttpMessageEnum;
 
 const router = Router();
 
@@ -36,13 +39,13 @@ router.use(companyRouter);
 
 // ERROR HANDLER
 router.use((error: any, req: Request, res: Response, next: NextFunction) => {
-  let statusCode = error?.code || 500;
-  let errorMessage = error?.message || "Internal server error";
+  let statusCode = error?.code || INTERNAL_SERVER_ERROR.code;
+  let errorMessage = error?.message || INTERNAL_SERVER_ERROR.message;
 
   // ESPECIAL ERRORS
   if (error?.code === 'LIMIT_UNEXPECTED_FILE') {
-    statusCode = 400;
-    errorMessage = "Limit file upload reached"
+    statusCode = LIMIT_FILE_UPLOAD.code;
+    errorMessage = LIMIT_FILE_UPLOAD.message
   }
 
   res.status(statusCode).json({ message: errorMessage });
