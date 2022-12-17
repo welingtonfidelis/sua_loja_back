@@ -13,4 +13,10 @@ export const parseToInt = (val?: any) => {
   if (isUndefined(val)) return undefined;
 
   return parseInt(val as string);
-}
+};
+
+export const parseArrayToInt = (val?: any[]) => {
+  if (isUndefined(val)) return undefined;
+
+  return val.map((item) => parseInt(item as string));
+};

@@ -4,7 +4,7 @@ import { productService } from "./service";
 
 import { HttpMessageEnum } from "../../shared/enum/httpMessage";
 import { CreateProductBody, CreateProductPayload, UpdateProductBody, UpdateProductPayload } from "./types";
-import { parseToInt } from "../../shared/utils";
+import { parseArrayToInt, parseToInt } from "../../shared/utils";
 
 const {
   createProductService,
@@ -39,7 +39,7 @@ const productController = {
     const limit = parseToInt(req.query.limit) as number;
     const filter_by_id = parseToInt(req.query.filter_by_id)
     const filter_by_name = req.query.filter_by_name as string;
-    const filter_by_category_id = parseToInt(req.query.filter_by_category_id);
+    const filter_by_category_id = parseArrayToInt(req.query.filter_by_category_id as string[]);
 
     const products = await listProductsService({
       page,

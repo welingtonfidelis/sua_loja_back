@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { HttpMessageEnum } from "../../shared/enum/httpMessage";
-import { parseToInt } from "../../shared/utils";
+import { parseArrayToInt, parseToInt } from "../../shared/utils";
 
 import { categoryService } from "../categories/service";
 import { companyService } from "../companies/service";
@@ -41,9 +41,7 @@ const clientController = {
     const limit = parseToInt(req.query.limit) as number;
     const company_name_key = req.query.company_name_key as string;
     const filter_by_name = req.query.filter_by_name as string;
-    const filter_by_category_id = parseToInt(
-      req.query.filter_by_category_id
-    ) as number;
+    const filter_by_category_id = parseArrayToInt(req.query.filter_by_category_id as string[]);
 
     const products = await listProductsByCompanyNameKeyService({
       page,

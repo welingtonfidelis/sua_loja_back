@@ -76,7 +76,7 @@ export type ListAllProductsPayload = {
   limit: number;
   filter_by_id?: number;
   filter_by_name?: string;
-  filter_by_category_id?: number;
+  filter_by_category_id?: number[];
   filter_by_company_id?: number;
 };
 
@@ -85,7 +85,7 @@ export type ListAllProductsByCompanyNameKeyPayload = {
   limit: number;
   company_name_key: string;
   filter_by_name?: string;
-  filter_by_category_id?: number;
+  filter_by_category_id?: number[];
 };
 
 export type DeleteProductByIdPayload = {
@@ -127,7 +127,7 @@ export type ListAllData = {
   limit: number;
   filter_by_id?: number;
   filter_by_name?: string;
-  filter_by_category_id?: number;
+  filter_by_category_id?: number[];
   filter_by_company_id?: number;
 };
 
@@ -136,7 +136,7 @@ export type ListAllByCompanyNameKeyData = {
   limit: number;
   company_name_key: string;
   filter_by_name?: string;
-  filter_by_category_id?: number;
+  filter_by_category_id?: number[];
 };
 
 export type DeleteProductByIdData = {

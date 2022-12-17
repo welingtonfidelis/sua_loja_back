@@ -60,7 +60,7 @@ const productRepository = {
     }
 
     if (filter_by_category_id) {
-      where.AND.push({ category_id: filter_by_category_id });
+      where.AND.push({ category_id: {in: filter_by_category_id} });
     }
 
     if (filter_by_name) {
@@ -97,7 +97,7 @@ const productRepository = {
     const where: any = { AND: [{ is_active: true }, { company: { name_key: company_name_key, is_blocked: false } }] };
 
     if (filter_by_category_id) {
-      where.AND.push({ category_id: filter_by_category_id });
+      where.AND.push({ category_id: {in: filter_by_category_id} });
     }
 
     if (filter_by_name) {
