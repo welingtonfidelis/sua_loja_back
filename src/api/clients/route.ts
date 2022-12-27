@@ -5,11 +5,12 @@ import { payloadValidate } from "../../shared/middleware/payloadValidate";
 import {
   getCompanyProfileSchema,
   listCategoriesSchema,
+  listCompaniesSchema,
   listProductsSchema,
 } from "./midleware/requestPayloadValidateSchema";
 
 const clientRouter = Router();
-const { listCategories, listProducts, getCompanyProfile } = clientController;
+const { listCategories, listProducts, listCompanies, getCompanyProfile } = clientController;
 
 // NOT AUTHENTICATED ROUTES
 clientRouter.get(
@@ -21,6 +22,11 @@ clientRouter.get(
   "/clients/products",
   payloadValidate(listProductsSchema),
   listProducts
+);
+clientRouter.get(
+  "/clients/company",
+  payloadValidate(listCompaniesSchema),
+  listCompanies
 );
 clientRouter.get(
   "/clients/company/profile",

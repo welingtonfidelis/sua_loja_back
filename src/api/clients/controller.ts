@@ -8,7 +8,7 @@ import { productService } from "../products/service";
 
 const { listCategoriesByCompanyNameKeyService } = categoryService;
 const { listProductsByCompanyNameKeyService } = productService;
-const { getCompanyByNameKeyService } = companyService;
+const { getCompanyByNameKeyService, listCompaniesService } = companyService;
 
 const { COMPANY_NOT_FOUND, BLOCKED_COMPANY } = HttpMessageEnum;
 
@@ -55,6 +55,27 @@ const clientController = {
       products: products.products.map((item) => {
         const { updated_at, company_id, created_at, is_active, ...rest } = item;
         return rest;
+      }),
+    };
+
+    return res.json(response);
+  },
+
+  async listCompanies(req: Request, res: Response) {
+    const page = parseToInt(req.query.page) as number;
+    const limit = parseToInt(req.query.limit) as number;
+    const filter_by_name = req.query.filter_by_name as string;
+
+    const companies = await listCompaniesService({
+      page,
+      limit,
+      filter_by_name,
+    });
+    const response = {
+      ...companies,
+      companies: companies.companies.map((item) => {
+        const { name, name_key } = item;
+        return { name, name_key };
       }),
     };
 
