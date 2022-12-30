@@ -14,7 +14,7 @@ const { listCategories, listProducts, listCompanies, getCompanyProfile } = clien
 
 // NOT AUTHENTICATED ROUTES
 clientRouter.get(
-  "/clients/products/categories",
+  "/clients/categories",
   payloadValidate(listCategoriesSchema),
   listCategories
 );
